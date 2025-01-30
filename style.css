@@ -1,0 +1,184 @@
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center;
+}
+
+h1,
+p {
+  margin: 0;
+}
+
+h1 {
+  text-transform: uppercase;
+  height: 3rem;
+  text-align: center;
+}
+
+.add-btn {
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.3rem;
+  background-color: red;
+  border: none;
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.5rem;
+}
+
+
+.delete-btn {
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.7rem 1.5rem;
+  border-radius: 0.2rem;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+  align-self: center;
+}
+
+
+.todo-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-radius: 5rem;
+  background: white;
+  border: 2px solid black;
+  padding: 3rem; /*3 do not touch this rania*/
+  height: 90%;
+  width: 90%;
+  max-width: 50rem; 
+  margin-top: 0;
+}
+
+
+.input {
+  position: relative;
+  display: flex;
+  margin-bottom: 0.2rem;
+}
+
+
+.input-field {
+  width: 100%;
+  border: 0.06rem solid #d2d2d2bf;
+  border-radius: 0.5rem;
+  padding: 1.25rem;
+  font-size: 1rem;
+}
+
+.todo-container {
+  display: flex;
+  align-items: center; 
+  justify-content: space-between; 
+  background-color: #f9f9f9;
+  margin-bottom: 0.5rem; 
+  max-width: 100%;
+  width: 70rem;
+}
+
+.todo-container p {
+  flex: 1;  
+  margin: 0;  
+  padding: 0;
+}
+
+
+.todo-checkbox {
+  margin-right: 10px;  /* space between checkbox and task text */
+}
+
+.todo-container .add-btn {
+  margin-left: 10px; 
+  cursor: pointer; 
+  align-self: center; 
+}
+
+
+ul {
+  padding: 0;
+  margin: 0;
+  overflow-y: scroll;
+  margin-top: 0.5rem; 
+}
+
+li {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+
+#tasksList p {
+  display: flex;
+  gap: 1rem;
+  color: black;
+  align-items: center;
+}
+
+#tasksList .disabled {
+  color: #8f98a8;
+}
+
+.disabled {
+  display: flex;
+  text-decoration: line-through;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  cursor: pointer;
+}
+
+input[type="checkbox"]::before {
+  content: "\2713";
+  display: inline-block;
+  width: 1.2rem;
+  height: 1.2rem; 
+  font-size: 1rem; 
+  text-align: center;
+  border: 0.06rem solid black;
+  border-radius: 50%;
+  color: transparent  
+}
+
+.tasksList {
+  list-style-type:circle;
+  padding: 0;
+  margin: 0;
+  height: 15rem;
+  scrollbar-width: thin;
+}
+
+.tasksList::-webkit-scrollbar {
+  width: 0.6rem;
+}
+
+
+.counter-container {
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  color:black;
+}
+
+.counter-container p {
+  align-self: center;
+}
+
+.counter {
+  border: 0.06rem solid black;
+}
+
+
+
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./style.css" />
+    <title>To-Do Tasks</title>
+  </head>
+  <body>
+    <section class="todo-section">
+
+      <h1>To Do Tasks</h1>
+
+      <div class="input">
+        <input type="text" class="input-field" id="taskInput" placeholder="Enter a new task"/>
+        <button class="add-btn">Add Task</button>
+      </div>
+
+      <ul class="tasksList" id="tasksList"></ul>
+
+      <div>
+        <hr class="counter" />
+        <div class="counter-container">
+          <p>Total of <span id="tasksCount">0</span> tasks</p>
+        </div>
+      </div>
+      
+    </section>
+     <script src="app.js" defer></script>
+  </body>
+</html>
