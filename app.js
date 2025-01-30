@@ -8,71 +8,79 @@ document.addEventListener("DOMContentLoaded", function () {
   addTaskButton.addEventListener("click", addNewTask);
   taskInput.addEventListener("keydown", function (event) {
     if (event.key === "Enter") {
-      event.preventDefault(); 
+      event.preventDefault();
       addNewTask();
     }
   });
-  renderTasks();
+  renderTasks(todoTasksArray);
 });
 
+
 function addNewTask() {
-  const newTask = taskInput.value.trim();
-  if (newTask !== "") {
-    todoTasksArray.push({ text: newTask, disabled: false });
+  const taskText = taskInput.value.trim();
+  if (taskText !== "") {
+    const newTask = { text: taskText, disabled: false };
+    const updatedTasksArray = [...todoTasksArray, newTask];
+    todoTasksArray = updatedTasksArray;
     taskInput.value = "";
-    renderTasks();
+    renderTasks(updatedTasksArray);
   }
 }
 
-function deleteTask(index) {
-  todoTasksArray.splice(index, 1); 
-  renderTasks();
+function deleteTask(index, tasks) {
+  const updatedTasks = tasks.filter((task, i) => i !== index);
+  renderTasks(updatedTasks);
 }
 
-function toggleTask(index) {
-  todoTasksArray[index].disabled = !todoTasksArray[index].disabled;
-  renderTasks();
+function toggleTask(index, tasks) {
+  const updatedTasks = tasks.map((task, i) =>
+    i === index ? { ...task, disabled: !task.disabled } : task
+  );
+  renderTasks(updatedTasks); 
 }
 
+function renderTasks(tasks) {
+  tasksList.innerHTML = "";
 
-function renderTasks() {
-  tasksList.innerHTML = ""; 
-
-  todoTasksArray.forEach((item, index) => {
-    const listItem = document.createElement("li");
-
-    const taskDiv = document.createElement("div");
-    taskDiv.classList.add("todo-container");
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.classList.add("todo-checkbox");
-    checkbox.checked = item.disabled; 
-
-    const taskText = document.createElement("p");
-    taskText.textContent = item.text;
-    taskText.classList.toggle("disabled", item.disabled); 
-
-    const deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
-    deleteBtn.classList.add("delete-btn");
-
-    //taskDiv
-    taskDiv.appendChild(checkbox);
-    taskDiv.appendChild(taskText);
-    taskDiv.appendChild(deleteBtn);
-
-    // li
-    listItem.appendChild(taskDiv);
-
-    // ul
+  tasks.forEach((task, index) => {
+    const listItem=createTaskElement(task, index, tasks);
     tasksList.appendChild(listItem);
-
-    checkbox.addEventListener("change", () => toggleTask(index)); 
-    deleteBtn.addEventListener("click", () => deleteTask(index));
-
   });
-
-  tasksCount.textContent = todoTasksArray.length;
+  tasksCount.textContent = tasks.length;
 }
 
+function createTaskElement(task, index, tasks){
+  const listItem = document.createElement("li");
+
+  const taskDiv = document.createElement("div");
+  taskDiv.classList.add("todo-container");
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.classList.add("todo-checkbox");
+  checkbox.checked = task.disabled;
+
+  const taskText = document.createElement("p");
+  taskText.textContent = task.text;
+  taskText.classList.toggle("disabled", task.disabled);
+
+  const deleteBtn = document.createElement("button");
+  deleteBtn.textContent = "Delete";
+  deleteBtn.classList.add("delete-btn");
+
+  //taskDiv
+  taskDiv.appendChild(checkbox);
+  taskDiv.appendChild(taskText);
+  taskDiv.appendChild(deleteBtn);
+
+  // li
+  listItem.appendChild(taskDiv);
+
+  // ul
+  tasksList.appendChild(listItem);
+
+  checkbox.addEventListener("change", () => toggleTask(index, tasks));
+  deleteBtn.addEventListener("click", () => deleteTask(index, tasks));
+
+  return listItem;
+}
