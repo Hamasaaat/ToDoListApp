@@ -1,3 +1,4 @@
+let todoTasksArray = [];
 const taskInput = document.getElementById("taskInput");
 const tasksList = document.getElementById("tasksList");
 const tasksCount = document.getElementById("tasksCount");
@@ -12,18 +13,17 @@ document.addEventListener("DOMContentLoaded", function () {
       addNewTask();
     }
   });
-
-  const tasks = retreiveFromStorage(storageKey);
-  renderTasks(tasks);
+  todoTasksArray = retreiveFromStorage(storageKey);
+  renderTasks(todoTasksArray);
 });
 
 function addNewTask() {
   const taskText = taskInput.value.trim();
   if (taskText !== "") {
     const newTask = { text: taskText, disabled: false };
-    const currentTasks = retreiveFromStorage(storageKey);
-    const updatedTasksArray = [...currentTasks, newTask];
+    const updatedTasksArray = [...todoTasksArray, newTask];
     saveToStorage(storageKey, updatedTasksArray);
+    todoTasksArray = updatedTasksArray;
     taskInput.value = "";
     renderTasks(updatedTasksArray);
   }
@@ -45,20 +45,12 @@ function toggleTask(index, tasks) {
 function renderTasks(tasks) {
   tasksList.innerHTML = "";
 
-  if (!Array.isArray(tasks)) {
-    console.error("Tasks should be an array");
-    return;
+  if (tasks && tasks.length > 0) {
+    tasks.forEach((task, index) => {
+      const listItem = createTaskElement(task, index, tasks);
+      tasksList.appendChild(listItem);
+    });
   }
-
-  if (tasks === null || tasks.length === 0) {
-    tasksCount.textContent = 0;
-    return;
-  }
-
-  tasks.forEach((task, index) => {
-    const listItem = createTaskElement(task, index, tasks);
-    tasksList.appendChild(listItem);
-  });
 
   tasksCount.textContent = tasks.length;
 }
@@ -99,7 +91,6 @@ function createTaskElement(task, index, tasks) {
   return listItem;
 }
 
-//#region Storage
 function retreiveFromStorage(key) {
   try {
     const storedData = localStorage.getItem(key);
@@ -116,4 +107,4 @@ function saveToStorage(key, value) {
   } catch (error) {
     console.error("Error saving data to localStorage:", error);
   }
-}//#endregion
+}
